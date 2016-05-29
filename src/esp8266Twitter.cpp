@@ -241,10 +241,10 @@ String esp8266Twitter::make_para_string() {
 }
 
 esp8266Twitter& esp8266Twitter::setKeys(const char * CONSUMER_KEY, const char * CONSUMER_SECRET, const char * ACCESS_TOKEN, const char * ACCESS_SECRET) {
-	this->consumerkey    = CONSUMER_KEY;
-	this->consumersecret = CONSUMER_SECRET;
-	this->accesstoken    = ACCESS_TOKEN;
-	this->accessscecret  = ACCESS_SECRET;
+  this->consumerkey    = CONSUMER_KEY;
+  this->consumersecret = CONSUMER_SECRET;
+  this->accesstoken    = ACCESS_TOKEN;
+  this->accessscecret  = ACCESS_SECRET;
   return *this;
 }
 
