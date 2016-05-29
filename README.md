@@ -6,21 +6,31 @@ direct text post using esp8266/Arduino without 3rd party api.
 
 https://dev.twitter.com/rest/reference/post/statuses/update
 
-based on 
+##### Based on
+
 - tweeting_silicon : http://harizanov.com/2015/06/tweeting-silicon/
 - https://github.com/igrr/axtls-8266/blob/master/crypto/hmac.c
 - http://hardwarefun.com/tutorials/url-encoding-in-arduino
 
 
-// chaeplin
+##### 
+
+ - Use ntp or rtc to sync time
+ - constructors : esp8266Twitter esp8266Twitter(consumer_key, consumer_secret, access_token, access_secret);
+ - to tweet : esp8266Twitter.tweet(message, value_timestamp, value_nonce)
 
 
-to use oauth :
+##### Limitations
 
-1.  make an app at https://apps.twitter.com
+ - no rate limit checking
+ - no 140 limit checking
 
-2.  generate Access Token / Secret. 
+##### To use oauth :
 
-3.  Use 4 keys to sketch
+ - make an app at https://apps.twitter.com
+ - generate Access Token / Secret. 
+ - Use 4 keys to sketch
 
 Enjoy.
+
+// chaeplin
