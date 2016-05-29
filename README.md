@@ -15,9 +15,12 @@ based on
 // chaeplin
 
 
-to use oauth : 
+to use oauth :
+
 1.  make an app at https://apps.twitter.com
+
 2.  generate Access Token / Secret. 
+
 3.  Use 4 keys to sketch
 
 Enjoy.
