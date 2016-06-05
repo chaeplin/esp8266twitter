@@ -126,10 +126,17 @@ bool esp8266Twitter::do_http_text_post(String OAuth_header) {
   http.addHeader("Content-Type", "application/x-www-form-urlencoded");
   int httpCode = http.POST(req_body_to_post);
 
+  // debug 
+  Serial.print("[DEBUG] do_http_text_post httpCode : ");
+  Serial.println(httpCode);
+
+
   if (httpCode > 0) {
-    if (httpCode >= 200 && httpCode < 400) {
+    //if (httpCode >= 200 && httpCode < 400) {
       payload = http.getString();
-    }
+      Serial.print("[DEBUG] do_http_text_post payload : ");
+      Serial.println(payload);      
+    //}
   } else {
     http.end();
     return false;
