@@ -31,6 +31,12 @@ https://dev.twitter.com/rest/reference/post/statuses/update
  - generate Access Token / Secret. 
  - Use 4 keys to sketch
 
+
+##### for image on spiffs
+ - post with media upload (if image is big, timout will occur) : https://github.com/chaeplin/esp8266_and_arduino/blob/master/_56-gopro-control/a-09-twitter-image-post/a-09-twitter-image-post.ino 
+ - post with APPEND(chunked) : https://github.com/chaeplin/esp8266_and_arduino/blob/master/_56-gopro-control/a-09-twitter-image-post/a-09-twitter-image-post.ino
+ - upload image to twitter is slow(3 ~ 4KB/s)
+
 Enjoy.
 
 // chaeplin
