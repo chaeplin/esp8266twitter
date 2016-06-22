@@ -50,7 +50,8 @@
 #define UPLOAD_MEDIA_SIZE      "total_bytes"
 #define UPLOAD_MEDIA_SEG_INDX  "segment_index"
 
-class esp8266Twitter {
+class esp8266Twitter 
+{
 
 private:
 	uint32_t value_timestamp;

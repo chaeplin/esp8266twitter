@@ -4,7 +4,8 @@
 #include <WiFiUdp.h>
 #include <esp8266Twitter.h>
 
-extern "C" {
+extern "C" 
+{
 #include "user_interface.h"
 }
 
@@ -38,17 +39,20 @@ int y;
 // 
 esp8266Twitter esp8266Twitter(consumer_key, consumer_secret, access_token, access_secret);
 
-void wifi_connect() {
+void wifi_connect() 
+{
   Serial.print("[WIFI] start millis     : ");
   Serial.println(millis());
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
 
   int Attempt = 0;
-  while (WiFi.status() != WL_CONNECTED) {
+  while (WiFi.status() != WL_CONNECTED) 
+  {
     delay(100);
     Attempt++;
-    if (Attempt == 300) {
+    if (Attempt == 300) 
+    {
       ESP.restart();
     }
   }
@@ -58,9 +62,11 @@ void wifi_connect() {
   Serial.println(WiFi.localIP());
 }
 
-void setup() {
+void setup() 
+{
   Serial.begin(115200);
-  while (!Serial) {
+  while (!Serial) 
+  {
     ; // wait for serial port to connect.
   }
   Serial.println();
@@ -70,7 +76,8 @@ void setup() {
   udp.begin(localPort);
   setSyncProvider(getNtpTime);
 
-  if (timeStatus() == timeNotSet) {
+  if (timeStatus() == timeNotSet) 
+  {
     setSyncProvider(getNtpTime);
   }
 
@@ -81,13 +88,17 @@ void setup() {
 time_t prevDisplay = 0;
 
 void loop() {
-  if (WiFi.status() == WL_CONNECTED) {
-    if (now() != prevDisplay) {
+  if (WiFi.status() == WL_CONNECTED) 
+  {
+    if (now() != prevDisplay) 
+    {
       prevDisplay = now();
-      if (timeStatus() == timeSet) {
+      if (timeStatus() == timeSet) 
+      {
         digitalClockDisplay();
 
-        if (x && y == 10) {
+        if (x && y == 10) 
+        {
           Serial.print("[TWEET] tweet :  ");
           tweeting();
           x = false;
@@ -95,21 +106,27 @@ void loop() {
       }
       y++;
     }
-  } else {
+  } 
+  else 
+  {
     wifi_connect();
     setSyncProvider(getNtpTime);
   }
 }
 
-void tweeting() {
+void tweeting() 
+{
   const char* value_status  = "esp-01 + direct tweet / test 04";
   uint32_t value_timestamp  = now();
   uint32_t value_nonce      = *(volatile uint32_t *)0x3FF20E44;
 
   Serial.println(value_status);
-  if (esp8266Twitter.tweet(value_status, value_timestamp, value_nonce)) {
+  if (esp8266Twitter.tweet(value_status, value_timestamp, value_nonce)) 
+  {
     Serial.println("[TWEET] result :  ok");
-  } else {
+  } 
+  else 
+  {
     Serial.println("[TWEET] tweet :  failed");
   }
 }
@@ -118,13 +135,16 @@ void tweeting() {
 const int NTP_PACKET_SIZE = 48;
 byte packetBuffer[NTP_PACKET_SIZE];
 
-time_t getNtpTime() {
+time_t getNtpTime() 
+{
   while (udp.parsePacket() > 0) ;
   sendNTPpacket(time_server);
   uint32_t beginWait = millis();
-  while (millis() - beginWait < 2500) {
+  while (millis() - beginWait < 2500) 
+  {
     int size = udp.parsePacket();
-    if (size >= NTP_PACKET_SIZE) {
+    if (size >= NTP_PACKET_SIZE) 
+    {
       udp.read(packetBuffer, NTP_PACKET_SIZE);
       unsigned long secsSince1900;
       secsSince1900 =  (unsigned long)packetBuffer[40] << 24;
@@ -137,7 +157,8 @@ time_t getNtpTime() {
   return 0;
 }
 
-void sendNTPpacket(IPAddress & address) {
+void sendNTPpacket(IPAddress & address) 
+{
   memset(packetBuffer, 0, NTP_PACKET_SIZE);
   packetBuffer[0] = 0b11100011;
   packetBuffer[1] = 0;
@@ -153,7 +174,8 @@ void sendNTPpacket(IPAddress & address) {
 }
 
 
-void digitalClockDisplay() {
+void digitalClockDisplay() 
+{
   Serial.print("[TIME] ");
   Serial.print(hour());
   printDigits(minute());
@@ -166,7 +188,8 @@ void digitalClockDisplay() {
   Serial.println(year());
 }
 
-void printDigits(int digits) {
+void printDigits(int digits) 
+{
   Serial.print(":");
   if (digits < 10)
     Serial.print('0');

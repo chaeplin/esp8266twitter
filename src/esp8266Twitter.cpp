@@ -6,7 +6,8 @@
 #include "esp8266twitter.h"
 #include "Arduino.h"
 
-extern "C" {
+extern "C" 
+{
   typedef struct
   {
     uint32_t Intermediate_Hash[SHA1_SIZE / 4]; /* Message Digest */
@@ -21,11 +22,13 @@ extern "C" {
   void SHA1_Final(uint8_t *digest, SHA1_CTX *);
 }
 
-esp8266Twitter::esp8266Twitter(const char * CONSUMER_KEY, const char * CONSUMER_SECRET, const char * ACCESS_TOKEN, const char * ACCESS_SECRET) {
+esp8266Twitter::esp8266Twitter(const char * CONSUMER_KEY, const char * CONSUMER_SECRET, const char * ACCESS_TOKEN, const char * ACCESS_SECRET) 
+{
 	setKeys(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_SECRET);
 }
 
-boolean esp8266Twitter::tweet(const char* message, uint32_t timestamp, uint32_t nonce) {
+boolean esp8266Twitter::tweet(const char* message, uint32_t timestamp, uint32_t nonce) 
+{
   bool rtn = false;
 
   this->value_timestamp  = timestamp;
@@ -42,7 +45,8 @@ boolean esp8266Twitter::tweet(const char* message, uint32_t timestamp, uint32_t 
 }
 
 // https://github.com/igrr/axtls-8266/blob/master/crypto/hmac.c
-void esp8266Twitter::ssl_hmac_sha1(const uint8_t *msg, int length, const uint8_t *key, int key_len, uint8_t *digest) {
+void esp8266Twitter::ssl_hmac_sha1(const uint8_t *msg, int length, const uint8_t *key, int key_len, uint8_t *digest) 
+{
   SHA1_CTX context;
   uint8_t k_ipad[64];
   uint8_t k_opad[64];
@@ -71,17 +75,22 @@ void esp8266Twitter::ssl_hmac_sha1(const uint8_t *msg, int length, const uint8_t
 
 // from http://hardwarefun.com/tutorials/url-encoding-in-arduino
 // modified by chaeplin
-String esp8266Twitter::URLEncode(const char* msg) {
+String esp8266Twitter::URLEncode(const char* msg) 
+{
   const char *hex = "0123456789ABCDEF";
   String encodedMsg = "";
 
-  while (*msg != '\0') {
+  while (*msg != '\0') 
+  {
     if ( ('a' <= *msg && *msg <= 'z')
          || ('A' <= *msg && *msg <= 'Z')
          || ('0' <= *msg && *msg <= '9')
-         || *msg  == '-' || *msg == '_' || *msg == '.' || *msg == '~' ) {
+         || *msg  == '-' || *msg == '_' || *msg == '.' || *msg == '~' ) 
+    {
       encodedMsg += *msg;
-    } else {
+    } 
+    else 
+    {
       encodedMsg += '%';
       encodedMsg += hex[*msg >> 4];
       encodedMsg += hex[*msg & 0xf];
@@ -91,8 +100,8 @@ String esp8266Twitter::URLEncode(const char* msg) {
   return encodedMsg;
 }
 
-String esp8266Twitter::make_signature(const char* secret_one, const char* secret_two, String base_string) {
-
+String esp8266Twitter::make_signature(const char* secret_one, const char* secret_two, String base_string) 
+{
   String signing_key = URLEncode(secret_one);
   signing_key += "&";
   signing_key += URLEncode(secret_two);
@@ -111,7 +120,8 @@ String esp8266Twitter::make_signature(const char* secret_one, const char* secret
   return oauth_signature;
 }
 
-bool esp8266Twitter::do_http_text_post(String OAuth_header) {
+bool esp8266Twitter::do_http_text_post(String OAuth_header) 
+{
   String payload = "";
   String uri_to_post = BASE_URI;
   String req_body_to_post;
@@ -131,27 +141,34 @@ bool esp8266Twitter::do_http_text_post(String OAuth_header) {
   Serial.println(httpCode);
 
 
-  if (httpCode > 0) {
+  if (httpCode > 0) 
+  {
     //if (httpCode >= 200 && httpCode < 400) {
       payload = http.getString();
       Serial.print("[DEBUG] do_http_text_post payload : ");
       Serial.println(payload);      
     //}
-  } else {
+  } 
+  else 
+  {
     http.end();
     return false;
   }
 
   http.end();
 
-  if (httpCode >= 200 && httpCode < 400) {
+  if (httpCode >= 200 && httpCode < 400) 
+  {
   	return true;
-  } else {
+  } 
+  else 
+  {
     return false;
   }
 }
 
-String esp8266Twitter::make_OAuth_header(String oauth_signature) {
+String esp8266Twitter::make_OAuth_header(String oauth_signature) 
+{
   String OAuth_header = "OAuth ";
   OAuth_header += KEY_CONSUMER_KEY;
   OAuth_header += "=\"";
@@ -185,7 +202,8 @@ String esp8266Twitter::make_OAuth_header(String oauth_signature) {
   return OAuth_header;
 }
 
-String esp8266Twitter::make_signature(String base_string) {
+String esp8266Twitter::make_signature(String base_string) 
+{
   String signing_key = URLEncode(this->consumersecret);
   signing_key += "&";
   signing_key += URLEncode(this->accessscecret);
@@ -204,7 +222,8 @@ String esp8266Twitter::make_signature(String base_string) {
   return oauth_signature;
 }
 
-String esp8266Twitter::make_base_string(String para_string) {
+String esp8266Twitter::make_base_string(String para_string) 
+{
   String base_string = KEY_HTTP_METHOD;
   base_string += "&";
   base_string += URLEncode(BASE_URL);
@@ -214,7 +233,8 @@ String esp8266Twitter::make_base_string(String para_string) {
   return base_string;
 }
 
-String esp8266Twitter::make_para_string() {
+String esp8266Twitter::make_para_string() 
+{
   String para_string;
   para_string += KEY_CONSUMER_KEY;
   para_string += "=" ;
@@ -247,7 +267,8 @@ String esp8266Twitter::make_para_string() {
   return para_string;
 }
 
-esp8266Twitter& esp8266Twitter::setKeys(const char * CONSUMER_KEY, const char * CONSUMER_SECRET, const char * ACCESS_TOKEN, const char * ACCESS_SECRET) {
+esp8266Twitter& esp8266Twitter::setKeys(const char * CONSUMER_KEY, const char * CONSUMER_SECRET, const char * ACCESS_TOKEN, const char * ACCESS_SECRET) 
+{
   this->consumerkey    = CONSUMER_KEY;
   this->consumersecret = CONSUMER_SECRET;
   this->accesstoken    = ACCESS_TOKEN;
