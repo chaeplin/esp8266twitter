@@ -70,10 +70,9 @@ private:
 	const char* consumersecret;
 	const char* accesstoken;
 	const char* accessscecret;
-	const char* api_fingerprint    = "24 EB 85 86 7A 98 71 85 E6 73 DF 0C 57 18 AE 50 2D BA 0A 69";
-	//const char* api_fingerprint    = "D8 01 5B F4 6D FB 91 C6 E4 B1 B6 AB 9A 72 C1 68 93 3D C2 D9";
-	const char* upload_fingerprint = "6B CA 82 63 F5 68 D6 DF 2E DF E3 4E CD 8E 70 E4 36 64 C3 61";
-	//const char* upload_fingerprint = "95 00 10 59 C8 27 FD 2C D0 76 12 F7 88 35 64 21 F5 60 D3 E9";
+	const char* api_fingerprint    = "AB 60 BB B5 F1 B9 A7 7E BE 68 1B BF 35 3F B3 C2 F9 B4 D2 44";
+	const char* upload_fingerprint = "48 CD EF 6B F7 F0 D3 8A 3C BD D2 FA E4 0A 29 15 EF 7D 72 1C";
+
 
 public:
 	esp8266Twitter(const char *, const char *, const char *, const char *);
